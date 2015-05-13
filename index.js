@@ -24,11 +24,16 @@ module.exports = function(opts) {
     }
 
     try {
+
+      var amdName = file.relative.split('.js')[0];
+      var umdName = amdName.replace(/[\/\.-]/g, '_');
+
       var fileOpts = objectAssign({}, opts, {
         sourceMap: !!file.sourceMap,
         sourceMapSource: file.relative,
         sourceMapFile: file.relative,
-        name: file.relative
+        name: umdName,
+        amdName: amdName
       });
 
       var res = esperanto[fn](file.contents.toString(), fileOpts);
